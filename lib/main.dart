@@ -55,10 +55,10 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
       girl.x -= 1;
     }
 
-    if (girl.y > 400) {
+    if (girl.y > size[1] - girl.size[1]) {
       direction = 'up';
     }
-    if (girl.y < 50) {
+    if (girl.y < 0) {
       direction = 'down';
     }
   }

@@ -7,10 +7,11 @@ void main() {
   runApp(GameWidget(game: MyGame()));
 }
 
-class MyGame extends FlameGame with DoubleTapDetector {
+class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
   final girl = SpriteComponent();
   bool running = true;
   String direction = 'down';
+  late double xTarget;
 
   @override
   Future<void>? onLoad() async {
@@ -20,6 +21,7 @@ class MyGame extends FlameGame with DoubleTapDetector {
       ..size = Vector2(100, 100)
       ..x = 150
       ..y = 50;
+    xTarget = girl.x;
     add(girl);
     return super.onLoad();
   }
@@ -35,6 +37,12 @@ class MyGame extends FlameGame with DoubleTapDetector {
       case 'up':
         girl.y -= 1;
         break;
+    }
+
+    if (girl.x <= xTarget) {
+      girl.x += 1;
+    } else {
+      girl.x -= 1;
     }
 
     if (girl.y > 400) {
@@ -54,5 +62,13 @@ class MyGame extends FlameGame with DoubleTapDetector {
     }
     running = !running;
     super.onDoubleTap();
+  }
+
+  @override
+  void onTapDown(TapDownInfo info) {
+    debugPrint('onTapDown: ${info.eventPosition.game}');
+    final xPos = info.eventPosition.game[0];
+    xTarget = xPos;
+    super.onTapDown(info);
   }
 }

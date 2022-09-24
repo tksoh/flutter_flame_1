@@ -55,7 +55,9 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
       girl.x -= 1;
     }
 
-    if (girl.y > size[1] - girl.size[1]) {
+    final floor = size[1] - girl.size[1];
+    if (girl.y > floor) {
+      girl.y = floor;
       direction = 'up';
     }
     if (girl.y < 0) {

@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 
@@ -13,10 +14,13 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
   bool running = true;
   String direction = 'down';
   late double xTarget;
+  double girlVerticalPos = 0;
 
   @override
   Future<void>? onLoad() async {
     debugPrint('load assets');
+
+    Flame.device.setPortrait();
 
     cat.sprite = await loadSprite('cat.png');
     cat
@@ -57,12 +61,14 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
 
     final floor = size[1] - girl.size[1];
     if (girl.y > floor) {
-      girl.y = floor;
+      girl.y = girlVerticalPos * floor;
       direction = 'up';
     }
     if (girl.y < 0) {
       direction = 'down';
     }
+
+    girlVerticalPos = girl.y / floor;
   }
 
   @override
@@ -83,8 +89,8 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
     final yPos = info.eventPosition.game[1];
     xTarget = xPos;
     cat
-      ..x = xPos
-      ..y = yPos;
+      ..x = xPos - cat.size[0] / 2
+      ..y = yPos - cat.size[1] / 2;
     super.onTapDown(info);
   }
 }

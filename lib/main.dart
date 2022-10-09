@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
-  final girl = SpriteComponent();
+  var girl = SpriteAnimationComponent();
   final cat = SpriteComponent();
   bool running = true;
   String direction = 'down';
@@ -29,14 +29,19 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
       ..y = 50;
     add(cat);
 
-    girl.sprite = await loadSprite('girl.png');
-    girl
-      ..size = Vector2(100, 100)
-      ..x = 150
-      ..y = 50;
+    var spriteSheet = await images.load('girl_spritesheet.png');
+    final spriteSize = Vector2(150, 150);
+    final spriteData = SpriteAnimationData.sequenced(
+      amount: 10,
+      stepTime: 0.03,
+      textureSize: Vector2(505.0, 474.0), // size of each frame in spritesheet
+    );
+    girl = SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
+      ..x = 200
+      ..y = 200
+      ..size = spriteSize;
     xTarget = girl.x;
     add(girl);
-
     return super.onLoad();
   }
 

@@ -4,6 +4,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
+import 'package:flame_texturepacker/flame_texturepacker.dart';
 
 void main() {
   runApp(GameWidget(game: MyGame()));
@@ -54,6 +55,15 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
       ..size = Vector2(150, 150)
       ..position = Vector2(300, 300);
     add(dead);
+
+    List<Sprite> sprites =
+        await fromJSONAtlas('candy_256.png', 'candy_256_sprites_map.json');
+
+    final candy = SpriteComponent(sprite: sprites[0])
+      ..size = Vector2(50, 50)
+      ..position = Vector2(200, 300);
+    add(candy);
+
     return super.onLoad();
   }
 

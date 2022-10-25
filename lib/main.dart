@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 
@@ -42,6 +43,17 @@ class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
       ..size = spriteSize;
     xTarget = girl.x;
     add(girl);
+
+    var spriteSheetDeadGirl = await images.load('spritesheet_dead_girl.png');
+    final deadGirlSheet = SpriteSheet.fromColumnsAndRows(
+      image: spriteSheetDeadGirl,
+      columns: 10,
+      rows: 1,
+    );
+    final dead = SpriteComponent(sprite: deadGirlSheet.getSprite(0, 9))
+      ..size = Vector2(150, 150)
+      ..position = Vector2(300, 300);
+    add(dead);
     return super.onLoad();
   }
 

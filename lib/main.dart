@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flame_texturepacker/flame_texturepacker.dart';
 
+// this is main
 void main() {
   runApp(GameWidget(game: MyGame()));
 }

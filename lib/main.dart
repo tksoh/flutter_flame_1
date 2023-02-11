@@ -11,7 +11,7 @@ void main() {
   runApp(GameWidget(game: MyGame()));
 }
 
-// this is class
+// this is class for game
 class MyGame extends FlameGame with DoubleTapDetector, TapDetector {
   var girl = SpriteAnimationComponent();
   final cat = SpriteComponent();
